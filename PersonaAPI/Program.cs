@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PersonaAPI.Context;
 using PersonaAPI.Models;
+using PersonaAPI.Services;
 using PersonaAPI.Services.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,7 @@ var apiToken = builder.Configuration.GetSection("TokenSettings");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.Configure<TokenSettings>(apiToken);
 
-
+builder.Services.AddScoped<IPersonaService, PersonaService>();
 builder.Services.AddScoped<ValidateTokenFilter>();
 
 builder.Services.AddAuthorization();
