@@ -42,11 +42,6 @@ namespace PersonaAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtiene una persona por ID
-        /// </summary>
-        /// <param name="id">ID de la persona</param>
-        /// <returns>Persona encontrada</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -86,11 +81,6 @@ namespace PersonaAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Crea una nueva persona
-        /// </summary>
-        /// <param name="persona">Datos de la persona</param>
-        /// <returns>Persona creada</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Persona persona)
         {
@@ -135,12 +125,6 @@ namespace PersonaAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Actualiza una persona existente
-        /// </summary>
-        /// <param name="id">ID de la persona</param>
-        /// <param name="persona">Datos actualizados</param>
-        /// <returns>Persona actualizada</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Persona persona)
         {
@@ -196,11 +180,6 @@ namespace PersonaAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Elimina una persona
-        /// </summary>
-        /// <param name="id">ID de la persona</param>
-        /// <returns>Confirmación de eliminación</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -238,5 +217,56 @@ namespace PersonaAPI.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        [Route("buscar")]
+        public async Task<IActionResult> FiltrarPersonas(
+             string? nombre = null,
+             string? apellido = null,
+             string? email = null)
+        {
+            try
+            {
+                // Validar que al menos un criterio de búsqueda sea proporcionado
+                if (string.IsNullOrWhiteSpace(nombre) &&
+                    string.IsNullOrWhiteSpace(apellido) &&
+                    string.IsNullOrWhiteSpace(email))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Debe proporcionar al menos un criterio de búsqueda (nombre, apellido o email)"
+                    });
+                }
+
+                var personas = await _personaService.FilterAsync(nombre, apellido, email);
+
+                if (!personas.Any())
+                {
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "No se encontraron personas con los criterios especificados"
+                    });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    data = personas,
+                    message = $"Se encontraron {personas.Count()} persona(s) exitosamente"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno del servidor",
+                    error = ex.Message
+                });
+            }
+        }
+
     }
 }

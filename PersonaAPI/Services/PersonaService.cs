@@ -151,5 +151,34 @@ namespace PersonaAPI.Services
             if (persona.FechaNacimiento.Date > DateTime.Now.Date)
                 throw new ArgumentException("La fecha de nacimiento no puede ser futura");
         }
+
+        public async Task<IEnumerable<Persona>> FilterAsync(string? nombre, string? apellido, string? email)
+        {
+            try
+            {
+                var query = _context.personas.AsQueryable();
+
+                if (!string.IsNullOrWhiteSpace(nombre))
+                {
+                    query = query.Where(p => p.Nombre.ToLower().Contains(nombre.ToLower()));
+                }
+
+                if (!string.IsNullOrWhiteSpace(apellido))
+                {
+                    query = query.Where(p => p.Apellido.ToLower().Contains(apellido.ToLower()));
+                }
+
+                if (!string.IsNullOrWhiteSpace(email))
+                {
+                    query = query.Where(p => p.Email.ToLower().Contains(email.ToLower()));
+                }
+
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al filtrar personas", ex);
+            }
+        }
     }
 }

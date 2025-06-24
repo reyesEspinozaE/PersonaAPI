@@ -10,5 +10,6 @@ namespace PersonaAPI.Services
         Task<Persona?> UpdateAsync(int id, Persona persona);
         Task<bool> DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
+        Task<IEnumerable<Persona>> FilterAsync(string? nombre, string? apellido, string? email);
     }
 }
