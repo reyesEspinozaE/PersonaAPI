@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonaAPI.Context;
 using PersonaAPI.Models;
 using PersonaAPI.Services;
 using PersonaAPI.Services.Filters;
