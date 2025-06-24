@@ -23,7 +23,6 @@ namespace PersonaAPI.Services
             }
             catch (Exception ex)
             {
-                // Log del error (puedes usar ILogger aquí)
                 throw new Exception("Error al obtener las personas", ex);
             }
         }
@@ -45,12 +44,10 @@ namespace PersonaAPI.Services
         {
             try
             {
-                // Validaciones de negocio
                 await ValidatePersonaAsync(persona);
 
-                // Establecer fecha de registro
                 persona.FechaRegistro = DateTime.UtcNow;
-                persona.IdPersona = null; // Asegurar que sea auto-generado
+                persona.IdPersona = null;
 
                 _context.personas.Add(persona);
                 await _context.SaveChangesAsync();
@@ -71,21 +68,27 @@ namespace PersonaAPI.Services
                 if (existingPersona == null)
                     return null;
 
-                // Validaciones de negocio
                 await ValidatePersonaAsync(persona, id);
 
-                // Actualizar propiedades
                 existingPersona.Nombre = persona.Nombre;
                 existingPersona.Apellido = persona.Apellido;
-                existingPersona.FechaNacimiento = persona.FechaNacimiento;
+
+                // Convertir FechaNacimiento a UTC
+                // Verificar si la fecha no es la fecha por defecto
+                if (persona.FechaNacimiento != DateTime.MinValue)
+                {
+                    existingPersona.FechaNacimiento = DateTime.SpecifyKind(persona.FechaNacimiento, DateTimeKind.Utc);
+                }
+                else
+                {
+                    existingPersona.FechaNacimiento = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
+                }
+
                 existingPersona.Email = persona.Email;
                 existingPersona.Telefono = persona.Telefono;
                 existingPersona.Direccion = persona.Direccion;
-                // No actualizar FechaRegistro ni IdPersona
 
-                _context.personas.Update(existingPersona);
                 await _context.SaveChangesAsync();
-
                 return existingPersona;
             }
             catch (Exception ex)
@@ -136,7 +139,7 @@ namespace PersonaAPI.Services
             if (emailExists)
                 throw new ArgumentException("Ya existe una persona con este email");
 
-            // Validar edad mínima (ejemplo: mayor de 18 años)
+            // Validar edad mínima (mayor de 18 años)
             var edad = DateTime.Now.Year - persona.FechaNacimiento.Year;
             if (persona.FechaNacimiento.Date > DateTime.Now.AddYears(-edad).Date)
                 edad--;

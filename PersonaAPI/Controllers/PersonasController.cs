@@ -18,18 +18,6 @@ namespace PersonaAPI.Controllers
             _personaService = personaService;
         }
 
-        //[HttpGet] // Obtener todas las personas
-        //public async Task<IActionResult> GetPersonas()
-        //{
-        //    List<Persona> personas = _Context.personas.ToList();
-        //    return Ok(personas);
-        //}
-
-
-        /// <summary>
-        /// Obtiene todas las personas
-        /// </summary>
-        /// <returns>Lista de personas</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

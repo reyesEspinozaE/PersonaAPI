@@ -10,24 +10,24 @@ namespace PersonaAPI.Models
         public int? IdPersona { get; set; }
 
         [Column("nombre")]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = string.Empty;
 
         [Column("apellido")]
-        public string Apellido { get; set; }
+        public string Apellido { get; set; } = string.Empty;
 
         [Column("fecha_nacimiento")] 
-        public DateTime FechaNacimiento { get; set; }   
+        public DateTime FechaNacimiento { get; set; } 
 
         [Column("email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Column("telefono")]
-        public string Telefono { get; set; }
+        public string Telefono { get; set; } = string.Empty;
 
         [Column("direccion")]
-        public string Direccion { get; set; }
+        public string Direccion { get; set; } = string.Empty;
 
         [Column("fecha_registro")]
-        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
     }
 }
