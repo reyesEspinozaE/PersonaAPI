@@ -36,11 +36,10 @@ Ejecutar el script SQL incluido en /Database/script.sql
 
 Actualizar la cadena de conexión en appsettings.json:
 json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Database=prueba_tecnica_datasys;Username=tu_usuario;Password=tu_password"
-  }
-}
+
+"ConnectionStrings": {
+  "ConnectionDB": "Host=localhost;Database=prueba_tecnica_datasys;Username=postgres;Password="su_contraseña";Port=5432"
+},
 
 3. Ejecutar la aplicación
    
@@ -67,6 +66,9 @@ Todas las peticiones deben incluir el header:
 
 Authorization: Bearer KvoVsjSoPGH9ojSB3x3QE4BVWl4m6unW6VTwpPoXZI
 
+Es decir si deseas realizar pruebas a los endpoints en Swagger, primero debes ingresar el token en la sección de "Authorization", o de lo contrario recibiras un error 401 'Unauthorized'.
+Esto se realiza de esta manera por temas de seguridad.
+
 Personas
 Método	                Endpoint	            Descripción
 GET	                    /api/personas	        Obtener todas las personas
@@ -92,10 +94,11 @@ La API maneja los siguientes códigos de estado:
 400 Bad Request: Datos inválidos o faltantes
 404 Not Found: Recurso no encontrado
 500 Internal Server Error: Error interno del servidor
-🧪 Pruebas
-Para probar la API, puedes usar:
 
-Swagger UI: Disponible en https://localhost:7163/swagger
+🧪 Pruebas
+Para probar la API, puedes usar (Recuerda ingresar el token de autorización):
+
+Swagger UI: Disponible en https://localhost:7163/swagger 
 
 📝 Licencia
 Este proyecto es para fines de evaluación técnica.
