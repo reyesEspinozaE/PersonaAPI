@@ -63,8 +63,7 @@ Tabla: personas
 - Autenticación, todas las peticiones deben incluir el header:
     - Authorization: Bearer KvoVsjSoPGH9ojSB3x3QE4BVWl4m6unW6VTwpPoXZI
 
-Es decir si deseas realizar pruebas a los endpoints en Swagger, primero debes ingresar el token en la sección de "Authorization", o de lo contrario recibiras un error 401 'Unauthorized'.
-Esto se realiza de esta manera por temas de seguridad.
+Es decir si deseas realizar pruebas a los endpoints por ejemplo en Swagger, primero debes ingresar el token en la sección de "Authorization", o de lo contrario recibiras un error 401 'Unauthorized'. Esto lo realizo de esta manera contemplando temas de seguridad.
 
 Personas
 - Método	                Endpoint	            Descripción
