@@ -74,7 +74,7 @@ namespace PersonaAPI.Services
         {
             try
             {
-                var existingPersona = await GetByIdAsync(id);
+                var existingPersona = await _context.personas.FirstOrDefaultAsync(p => p.IdPersona == id); ;
                 if (existingPersona == null)
                     return null;
 
@@ -168,7 +168,6 @@ namespace PersonaAPI.Services
             {
                 var query = _context.personas.AsQueryable();
 
-                // Usar OR en lugar de AND
                 query = query.Where(p =>
                     (!string.IsNullOrWhiteSpace(nombre) && p.Nombre.ToLower().Contains(nombre.ToLower())) ||
                     (!string.IsNullOrWhiteSpace(apellido) && p.Apellido.ToLower().Contains(apellido.ToLower())) ||

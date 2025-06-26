@@ -22,10 +22,10 @@ namespace PersonaAPI.Models
         public string Email { get; set; } = string.Empty;
 
         [Column("telefono")]
-        public string Telefono { get; set; } = string.Empty;
+        public string? Telefono { get; set; } 
 
         [Column("direccion")]
-        public string Direccion { get; set; } = string.Empty;
+        public string? Direccion { get; set; }
 
         [Column("fecha_registro")]
         public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
