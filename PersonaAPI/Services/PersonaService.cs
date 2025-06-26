@@ -151,7 +151,7 @@ namespace PersonaAPI.Services
             if (persona.FechaNacimiento.Date > DateTime.Now.Date)
                 throw new ArgumentException("La fecha de nacimiento no puede ser futura");
         }
-
+        
         public async Task<IEnumerable<Persona>> FilterAsync(string? nombre, string? apellido, string? email)
         {
             try

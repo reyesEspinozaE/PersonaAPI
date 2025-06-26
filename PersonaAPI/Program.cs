@@ -65,14 +65,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// IMPORTANTE: Agregar el middleware de CORS
+app.UseCors();
+
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-//app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 // No se encontrarán problemas
 app.UseHttpsRedirection();
