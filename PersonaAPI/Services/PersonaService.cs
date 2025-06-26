@@ -168,20 +168,12 @@ namespace PersonaAPI.Services
             {
                 var query = _context.personas.AsQueryable();
 
-                if (!string.IsNullOrWhiteSpace(nombre))
-                {
-                    query = query.Where(p => p.Nombre.ToLower().Contains(nombre.ToLower()));
-                }
-
-                if (!string.IsNullOrWhiteSpace(apellido))
-                {
-                    query = query.Where(p => p.Apellido.ToLower().Contains(apellido.ToLower()));
-                }
-
-                if (!string.IsNullOrWhiteSpace(email))
-                {
-                    query = query.Where(p => p.Email.ToLower().Contains(email.ToLower()));
-                }
+                // Usar OR en lugar de AND
+                query = query.Where(p =>
+                    (!string.IsNullOrWhiteSpace(nombre) && p.Nombre.ToLower().Contains(nombre.ToLower())) ||
+                    (!string.IsNullOrWhiteSpace(apellido) && p.Apellido.ToLower().Contains(apellido.ToLower())) ||
+                    (!string.IsNullOrWhiteSpace(email) && p.Email.ToLower().Contains(email.ToLower()))
+                );
 
                 return await query.ToListAsync();
             }
