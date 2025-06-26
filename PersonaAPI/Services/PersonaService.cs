@@ -48,6 +48,16 @@ namespace PersonaAPI.Services
 
                 persona.FechaRegistro = DateTime.UtcNow;
                 persona.IdPersona = null;
+                // Convertir FechaNacimiento a UTC
+                // Verificar si la fecha no es la fecha por defecto
+                if (persona.FechaNacimiento != DateTime.MinValue)
+                {
+                    persona.FechaNacimiento = DateTime.SpecifyKind(persona.FechaNacimiento, DateTimeKind.Utc);
+                }
+                else
+                {
+                    persona.FechaNacimiento = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
+                }
 
                 _context.personas.Add(persona);
                 await _context.SaveChangesAsync();
